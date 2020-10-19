@@ -1,0 +1,68 @@
+openapi: 3.0.1
+info:
+  title: Payment Service
+  description: The payment service acts as a payment provider
+  version: 0.1.0
+servers:
+  - url: 'http://localhost:8080/api'
+paths:
+  '/payment/customer/{customerId}':
+    post:
+      tags:
+        - customerId
+      summary: Sumbits a payment for processing
+      operationId: payForClient
+      parameters:
+        - name: customerId
+          in: path
+          description: The id of the customer found by the Jwt
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The request body for a payment to go through
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment'
+      responses:
+        '200':
+          description: A customer configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentResult'
+        '404':
+          description: Not found
+
+components:
+  schemas:
+    Payment:
+      type: object
+      properties:
+        tenantId:
+          type: string
+        orderEntry:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderEntry'
+        totalCost:
+          type: number
+
+    PaymentResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+    OrderEntry:
+      type: object
+      properties:
+        itemId:
+          type: string
+        amount:
+          type: number
+        itemPrice:
+          type: number
+
+

@@ -1,0 +1,44 @@
+openapi: 3.0.1
+info:
+  title: Customer Config Service
+  description: The Customer config service provides the configurations for the customers configurations
+  version: 0.1.0
+servers:
+  - url: 'http://localhost:8080/api'
+paths:
+  '/customer/{customerId}':
+    get:
+      tags:
+        - customerId
+      summary: returns a customer configuration
+      operationId: getCustomerConfigById
+      parameters:
+        - name: customerId
+          in: path
+          description: The id of the customer found by the Jwt
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A customer configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerConfig'
+        '404':
+          description: Not found
+
+
+components:
+  schemas:
+    CustomerConfig:
+      type: object
+      properties:
+        paymentProvider:
+          type: string
+        specialAction:
+          type: string
+          enum:
+            - Order_Before_Payment
+            - Block_Payment

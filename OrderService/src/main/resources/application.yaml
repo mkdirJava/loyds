@@ -1,0 +1,39 @@
+
+
+# The configurations here can be overridden in the image by either environment variables or placing an applications.yaml in certain diectories
+# see the below link for more information
+# https://docs.spring.io/spring-boot/docs/1.2.2.RELEASE/reference/html/boot-features-external-config.html
+
+##used for fiegn client
+customerConfig:
+  url: "CustomerConfigURL"
+payment:
+  url: "PaymentURL"
+## used for configuring queue destinations
+queues:
+  order: "ORDER"
+  order-accepted: "ORDER-ACCEPTED"
+  order-rejected: "ORDER-REJECTED"
+
+#spring:
+#  #JMS active Mq settings
+#  activemq:
+#    broker-url: "URL of the broker"
+#    user: "User to use"
+#    password: "Password to use"
+#  datasource:
+#    url: "JDBC connection string of the database to use"
+#    password: "password to use"
+#    username: "username to use"
+#    driver-class-name: "database driver to use"
+#  # JPA / databased settings
+#  jpa:
+#    database-platform: " database platform"
+#    hibernate:
+#      ddl-auto: " handling of data definition language, aka create/ update / delete on application start, most dont use this and use liquibase or flyway"
+#  # SMPT settings
+#  mail:
+#    host: " host name of the smpt server"
+#    port: " port to use to connect"
+#    username: "username to use"
+#    password: " password to use"
