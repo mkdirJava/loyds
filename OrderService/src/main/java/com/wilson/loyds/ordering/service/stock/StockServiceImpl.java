@@ -25,21 +25,22 @@ public class StockServiceImpl implements IStockService {
 
     /**
      * Adjust stock repo against the order
+     *
      * @param order
      */
     @Override
     public void adjustStockLevels(final Order order) {
         validate(order);
-        order.getOrderEntry().stream().forEach(orderEntry ->
-        {
+        order.getOrderEntry().stream().forEach(orderEntry -> {
             StockItem stockItem = stockRepo.findById(orderEntry.getItemId()).get();
-            stockItem.setAmountInStock(stockItem.getAmountInStock()- order.getAmount());
+            stockItem.setAmountInStock(stockItem.getAmountInStock() - order.getAmount());
             stockRepo.save(stockItem);
         });
     }
 
     /**
      * Validation of order to ensure the order comprises of known stock
+     *
      * @param order
      */
     private void validate(final Order order) {
@@ -52,8 +53,7 @@ public class StockServiceImpl implements IStockService {
         }).filter(itemId -> itemId != null).collect(Collectors.toList());
 
         if (!invalidStockIds.isEmpty()) {
-            String invalidStockIdsCommaSeparated = invalidStockIds
-                    .stream()
+            String invalidStockIdsCommaSeparated = invalidStockIds.stream()
                     .map(stockItemId -> stockItemId.toString())
                     .collect(Collectors.joining(","));
             throw new InvalidStockRequestedException(String.format("Stock requested is not found %s",

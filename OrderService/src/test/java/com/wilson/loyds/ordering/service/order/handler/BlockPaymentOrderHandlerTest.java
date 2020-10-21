@@ -32,20 +32,19 @@ class BlockPaymentOrderHandlerTest {
     @BeforeEach
     void setup() {
         MockitoAnnotations.initMocks(this);
-        this.classUnderTest = new BlockPaymentOrderHandler( orderRepo, stockRepo, iEmailService);
+        this.classUnderTest = new BlockPaymentOrderHandler(orderRepo, stockRepo, iEmailService);
     }
 
     @Test
     void blockProcessOrder() {
         String tenantId = "tenantId";
         Order order = new Order();
-        assertThrows(BlockingPaymentException.class,()-> this.classUnderTest.processOrderAction(tenantId, order));
+        assertThrows(BlockingPaymentException.class, () -> this.classUnderTest.processOrderAction(tenantId, order));
         verifyNoMoreInteractions(this.paymentApi);
         verifyNoMoreInteractions(this.iStockService);
         verifyNoMoreInteractions(this.orderRepo);
         verifyNoMoreInteractions(this.stockRepo);
         verifyNoMoreInteractions(this.iEmailService);
     }
-
 
 }

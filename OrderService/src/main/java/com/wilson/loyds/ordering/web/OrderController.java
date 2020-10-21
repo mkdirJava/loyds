@@ -6,6 +6,8 @@ import com.wilson.loyds.order.domain.OrderEntryDto;
 import com.wilson.loyds.ordering.repository.order.model.OrderEntity;
 import com.wilson.loyds.ordering.repository.order.model.OrderEntryEntity;
 import com.wilson.loyds.ordering.repository.order.repo.OrderRepo;
+import feign.Response;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
@@ -19,6 +21,9 @@ import java.util.stream.Collectors;
 @Controller
 public class OrderController implements OrderApi {
 
+    @Value("${order.stuff}")
+    private String message;
+
     private OrderRepo orderRepo;
 
     public OrderController(final OrderRepo orderRepo) {
@@ -27,21 +32,34 @@ public class OrderController implements OrderApi {
 
     @Override
     public ResponseEntity<OrderDto> getOrderById(final String orderId) {
-        OrderDto orderDto = this.orderRepo.findById(UUID.fromString(orderId))
+        UUID orderUUID;
+        try{
+            orderUUID = UUID.fromString(orderId);
+        }catch(Exception e){
+            return ResponseEntity.notFound().build();
+        }
+        OrderDto orderDto = this.orderRepo.findById(orderUUID)
                 .filter(orderEntity -> orderEntity != null)
                 .map(OrderController::persistenceToDto)
                 .stream()
                 .findFirst()
                 .orElse(null);
-        if(orderDto == null){
+
+        if(message != null){
+            OrderDto order = new OrderDto();
+            order.setOrderId(message);
+            return ResponseEntity.ok(order);
+        }
+        if (orderDto == null) {
             return ResponseEntity.notFound().build();
-        }else{
+        } else {
             return ResponseEntity.ok(orderDto);
         }
     }
 
     /**
      * Take from persistence to Web DTO
+     *
      * @param orderEntity
      * @return
      */
@@ -55,6 +73,7 @@ public class OrderController implements OrderApi {
 
     /**
      * Handle a list of order entries
+     *
      * @param orderEntryEntity
      * @return
      */
@@ -64,6 +83,7 @@ public class OrderController implements OrderApi {
 
     /**
      * handle a singular order entry
+     *
      * @param orderEntryEntity
      * @return
      */

@@ -19,7 +19,7 @@ public class EmailServiceImpl implements IEmailService {
     }
 
     @Override
-    public void sendEmail(final String recipient ,final String messageBody) {
+    public void sendEmail(final String recipient, final String messageBody) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("noreply@Loyds.com");
         message.setTo(recipient);

@@ -18,8 +18,7 @@ public class BasicOrderHandler extends OrderHandler {
     private IPaymentService paymentApi;
     private IStockService iStockService;
 
-    public BasicOrderHandler(
-            final OrderRepo orderRepo,
+    public BasicOrderHandler(final OrderRepo orderRepo,
             final StockRepo stockRepo,
             final IEmailService iEmailService,
             final IPaymentService paymentApi,
@@ -31,6 +30,7 @@ public class BasicOrderHandler extends OrderHandler {
 
     /**
      * Basic action to handle payment and adjust stocks
+     *
      * @param tenantId
      * @param order
      */

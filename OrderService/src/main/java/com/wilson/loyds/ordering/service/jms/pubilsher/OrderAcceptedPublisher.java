@@ -16,18 +16,16 @@ class OrderAcceptedPublisher {
     @Value("${queues.order-accepted}")
     private String destination;
 
-
     public OrderAcceptedPublisher(final JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
     }
 
     /**
-     *
      * @param tenantId
      * @param orderAccepted
      */
-    public void sendOrderAccepted(String tenantId, Object orderAccepted){
-        this.jmsTemplate.convertAndSend(destination,orderAccepted,message -> {
+    public void sendOrderAccepted(String tenantId, Object orderAccepted) {
+        this.jmsTemplate.convertAndSend(destination, orderAccepted, message -> {
             message.setStringProperty("TENANT_KEY", tenantId);
             return message;
         });

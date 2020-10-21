@@ -1,9 +1,7 @@
-
-
 # The configurations here can be overridden in the image by either environment variables or placing an applications.yaml in certain diectories
 # see the below link for more information
 # https://docs.spring.io/spring-boot/docs/1.2.2.RELEASE/reference/html/boot-features-external-config.html
-
+message: "home"
 ##used for fiegn client
 customerConfig:
   url: "CustomerConfigURL"

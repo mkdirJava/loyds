@@ -6,6 +6,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 /**
  * A Fiegn client to handle payment request
  */
-@FeignClient(name="paymentClient", url="${payment.url}")
-public interface PaymentClient  extends PaymentApi {
+@FeignClient(name = "paymentClient", url = "${payment.url}")
+public interface PaymentClient extends PaymentApi {
 }

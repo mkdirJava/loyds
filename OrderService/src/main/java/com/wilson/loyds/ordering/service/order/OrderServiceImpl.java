@@ -32,6 +32,7 @@ public class OrderServiceImpl implements IOrderService {
 
     /**
      * This uses customer config and handlers as a strategy design to pick an appropriate handler to use on the order
+     *
      * @param tenantId
      * @param order
      * @return
@@ -44,6 +45,6 @@ public class OrderServiceImpl implements IOrderService {
                         .equalsIgnoreCase(customerConfig.getSpecialAction().toString()))
                 .findFirst()
                 .orElseGet(() -> basicOrderHandler);
-        return handler.processOrder(tenantId,order);
+        return handler.processOrder(tenantId, order);
     }
 }

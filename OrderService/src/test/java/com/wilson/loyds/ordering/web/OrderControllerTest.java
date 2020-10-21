@@ -45,22 +45,23 @@ class OrderControllerTest {
         List<OrderEntryEntity> orderEntries = List.of(OrderEntryEntity.builder()
                 .id(orderEntryId)
                 .itemPrice(new BigDecimal(22))
-                .amount(new BigDecimal(1)).productId(productId).build());
+                .amount(new BigDecimal(1))
+                .productId(productId)
+                .build());
         OrderEntity orderEntity = OrderEntity.builder()
                 .id(orderId)
                 .total(new BigDecimal(22))
-                .orderEntryEntity(orderEntries).build();
+                .orderEntryEntity(orderEntries)
+                .build();
         when(this.orderRepo.findById(orderId)).thenReturn(Optional.of(orderEntity));
         ResponseEntity<OrderDto> orderById = classUnderTest.getOrderById(orderId.toString());
 
-        assertAll(
-                ()-> assertTrue( orderById.getStatusCode().value() == 200),
-                ()-> assertTrue( orderById.getBody().getOrderId().equalsIgnoreCase(orderId.toString())),
-                        ()-> assertEquals(1,orderById.getBody().getOrderEntries().size()),
-                ()-> assertEquals(1,orderById.getBody().getOrderEntries().get(0).getAmount()),
-                ()-> assertEquals(productId.toString(),orderById.getBody().getOrderEntries().get(0).getProductId()),
-                ()-> assertEquals(unitCost.toString(),orderById.getBody().getOrderEntries().get(0).getUnitCost())
-        );
+        assertAll(() -> assertTrue(orderById.getStatusCode().value() == 200),
+                () -> assertTrue(orderById.getBody().getOrderId().equalsIgnoreCase(orderId.toString())),
+                () -> assertEquals(1, orderById.getBody().getOrderEntries().size()),
+                () -> assertEquals(1, orderById.getBody().getOrderEntries().get(0).getAmount()),
+                () -> assertEquals(productId.toString(), orderById.getBody().getOrderEntries().get(0).getProductId()),
+                () -> assertEquals(unitCost.toString(), orderById.getBody().getOrderEntries().get(0).getUnitCost()));
 
         verify(this.orderRepo).findById(orderId);
         verifyNoMoreInteractions(this.orderRepo);
@@ -71,7 +72,7 @@ class OrderControllerTest {
     void notFoundGetRequest() {
         when(this.orderRepo.findById(orderId)).thenReturn(Optional.empty());
         ResponseEntity<OrderDto> orderById = classUnderTest.getOrderById(orderId.toString());
-        assertEquals(404,orderById.getStatusCode().value());
+        assertEquals(404, orderById.getStatusCode().value());
         verify(this.orderRepo).findById(orderId);
         verifyNoMoreInteractions(this.orderRepo);
     }

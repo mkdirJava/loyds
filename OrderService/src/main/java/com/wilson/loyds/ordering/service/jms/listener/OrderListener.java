@@ -27,6 +27,7 @@ public class OrderListener {
 
     /**
      * Listens to the queue.orders configuration queue.
+     *
      * @param messageHeaders
      * @param order
      */
@@ -41,19 +42,20 @@ public class OrderListener {
         // message is valid
         // try to process it
         String tenantId = (String) messageHeaders.get(TENANT_KEY);
-        try{
+        try {
             this.orderService.processOrder(tenantId, order);
-        }catch( Exception e){
-            this.jmsFacade.sendUnSuccessfulMessage(null,order);
+        } catch (Exception e) {
+            this.jmsFacade.sendUnSuccessfulMessage(null, order);
             return;
         }
         // send a success
-        this.jmsFacade.sendSuccessfulMessage(tenantId,order);
+        this.jmsFacade.sendSuccessfulMessage(tenantId, order);
 
     }
 
     /**
      * All valid messages shoudl have a tenant key
+     *
      * @param messageHeaders
      * @param order
      * @return
@@ -61,7 +63,7 @@ public class OrderListener {
     private boolean validate(MessageHeaders messageHeaders, Order order) {
         if (!messageHeaders.containsKey(TENANT_KEY)) {
             // send a message to the unsuccessful queue stating the order is not successful
-            this.jmsFacade.sendUnSuccessfulMessage(null,order);
+            this.jmsFacade.sendUnSuccessfulMessage(null, order);
             return false;
         }
         return true;

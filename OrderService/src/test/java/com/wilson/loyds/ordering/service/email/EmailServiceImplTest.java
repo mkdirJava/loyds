@@ -17,13 +17,13 @@ class EmailServiceImplTest {
     private EmailServiceImpl classUnderTest;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         MockitoAnnotations.initMocks(this);
         classUnderTest = new EmailServiceImpl(emailSender);
     }
 
     @Test
-    void sendEmail(){
+    void sendEmail() {
 
         String recipient = "what@gmail.com";
         String messageBody = "You have a new message";

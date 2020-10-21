@@ -23,12 +23,11 @@ class OrderRejectedPublisher {
     }
 
     /**
-     *
      * @param tenantId
      * @param orderRejected
      */
-    public void sendOrderRejected(final String tenantId, final Object orderRejected){
-        this.jmsTemplate.convertAndSend(destination,orderRejected,message -> {
+    public void sendOrderRejected(final String tenantId, final Object orderRejected) {
+        this.jmsTemplate.convertAndSend(destination, orderRejected, message -> {
             message.setStringProperty("TENANT_KEY", tenantId);
             return message;
         });

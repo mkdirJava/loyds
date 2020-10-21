@@ -32,8 +32,11 @@ class OrderBeforePaymentOrderHandlerTest {
     @BeforeEach
     void setup() {
         MockitoAnnotations.initMocks(this);
-        this.classUnderTest = new OrderBeforePaymentOrderHandler( orderRepo, stockRepo,
-                paymentApi,iStockService,iEmailService);
+        this.classUnderTest = new OrderBeforePaymentOrderHandler(orderRepo,
+                stockRepo,
+                paymentApi,
+                iStockService,
+                iEmailService);
     }
 
     @Test

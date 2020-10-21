@@ -27,6 +27,7 @@ public class CustomerConfigServiceImpl implements ICustomerConfigService {
             throw new CustomerConfigNotAvailableException(String.format(
                     "Customer config for client %s is resulted in a non 200 Http response",
                     tenantId));
-        } return customerConfigById.getBody();
+        }
+        return customerConfigById.getBody();
     }
 }

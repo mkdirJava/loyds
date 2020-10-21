@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: wilson-loyds
+  name: wilson-loyds
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wilson-loyds
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: wilson-loyds
+    spec:
+      containers:
+      - image: loyds
+        name: loyds
+        imagePullPolicy: Never
+        env:
+          - name: SPRING_CONFIG_LOCATION
+            value: classpath:/,file:/opt/config/
+        volumeMounts:
+          - name: secret-mount
+            mountPath: "/opt/config"
+        resources: {}
+      volumes:
+        - name: secret-mount
+          secret:
+            secretName: loyds-secret
+            items:
+              - key: password.yaml
+                mode: 511
+                path: application.yaml
+status: {}

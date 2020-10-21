@@ -32,6 +32,7 @@ public abstract class OrderHandler {
 
     /**
      * action is used as a trigger point for the strategy design pattern.
+     *
      * @return
      */
     public String getAction() {
@@ -40,6 +41,7 @@ public abstract class OrderHandler {
 
     /**
      * overridden by child classes
+     *
      * @param tenantId
      * @param order
      */
@@ -54,6 +56,7 @@ public abstract class OrderHandler {
 
     /**
      * before the action starts save down the order and then send an email
+     *
      * @param tenantId
      * @param order
      * @return
@@ -67,6 +70,7 @@ public abstract class OrderHandler {
 
     /**
      * after the action update the order as ordered
+     *
      * @param savedEntity
      */
     private void afterProcessOrder(final OrderEntity savedEntity) {
@@ -76,6 +80,7 @@ public abstract class OrderHandler {
 
     /**
      * save the payload in as a persistence domain
+     *
      * @param tenantId
      * @param order
      * @return
@@ -100,15 +105,21 @@ public abstract class OrderHandler {
 
     /**
      * validate the order
+     *
      * @param order
      */
-    private void validate(final Order order){
-        order.getOrderEntry().parallelStream().map(orderEntryMessage -> this.stockRepo.findById(orderEntryMessage.getItemId())
-                .orElseThrow(OrderItemNotInStockException::new));
-    };
+    private void validate(final Order order) {
+        order.getOrderEntry()
+                .parallelStream()
+                .map(orderEntryMessage -> this.stockRepo.findById(orderEntryMessage.getItemId())
+                        .orElseThrow(OrderItemNotInStockException::new));
+    }
+
+    ;
 
     /**
      * convert the order entry to persistence
+     *
      * @param orderEntryMessage
      * @return
      */

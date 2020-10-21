@@ -10,8 +10,8 @@ import org.springframework.jms.annotation.EnableJms;
 @SpringBootApplication
 public class WilsonApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WilsonApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(WilsonApplication.class, args);
+    }
 
 }

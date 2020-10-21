@@ -66,8 +66,9 @@ class PaymentServiceImplTest {
         order.setOrderEntry(orderEntries);
         Payment payment = Payment.builder().order(order).build();
         when(this.paymentApi.payForClient(eq(tenantId), any())).thenReturn(ResponseEntity.badRequest().build());
-        assertThrows(PaymentUnsuccessfulException.class,() -> classUnderTest.handlePayment(tenantId, payment));
+        assertThrows(PaymentUnsuccessfulException.class, () -> classUnderTest.handlePayment(tenantId, payment));
     }
+
     @Test
     void paymentFailTransaction() {
         String tenantId = "TENANT_1";
@@ -83,6 +84,6 @@ class PaymentServiceImplTest {
         PaymentResultDto paymentResultDto = new PaymentResultDto();
         paymentResultDto.setSuccess(false);
         when(this.paymentApi.payForClient(eq(tenantId), any())).thenReturn(ResponseEntity.ok(paymentResultDto));
-        assertThrows(PaymentUnsuccessfulException.class,() -> classUnderTest.handlePayment(tenantId, payment));
+        assertThrows(PaymentUnsuccessfulException.class, () -> classUnderTest.handlePayment(tenantId, payment));
     }
 }

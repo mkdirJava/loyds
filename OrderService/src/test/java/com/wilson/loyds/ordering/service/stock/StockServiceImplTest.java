@@ -28,13 +28,13 @@ class StockServiceImplTest {
     private StockRepo stockRepo;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         MockitoAnnotations.initMocks(this);
         classUnderTest = new StockServiceImpl(stockRepo);
     }
 
     @Test
-    void adjustStockSuccessful(){
+    void adjustStockSuccessful() {
         UUID itemId = UUID.randomUUID();
         List<OrderEntryMessage> orderEntries = List.of(OrderEntryMessage.builder()
                 .itemPrice(BigDecimal.valueOf(2.2))
@@ -51,14 +51,14 @@ class StockServiceImplTest {
         when(this.stockRepo.findById(itemId)).thenReturn(Optional.of(stockItem));
         classUnderTest.adjustStockLevels(order);
         stockItem.setAmountInStock(0);
-        verify(this.stockRepo,times(2)).findById(itemId);
+        verify(this.stockRepo, times(2)).findById(itemId);
         verify(this.stockRepo).save(stockItem);
         verifyNoMoreInteractions(this.stockRepo);
 
     }
 
     @Test
-    void adjustStockFail(){
+    void adjustStockFail() {
         UUID itemId = UUID.randomUUID();
         List<OrderEntryMessage> orderEntries = List.of(OrderEntryMessage.builder()
                 .itemPrice(BigDecimal.valueOf(2.2))
@@ -73,7 +73,7 @@ class StockServiceImplTest {
         stockItem.setAmountInStock(1);
 
         when(this.stockRepo.findById(itemId)).thenReturn(Optional.empty());
-        assertThrows(InvalidStockRequestedException.class,()->classUnderTest.adjustStockLevels(order));
+        assertThrows(InvalidStockRequestedException.class, () -> classUnderTest.adjustStockLevels(order));
         verify(this.stockRepo).findById(itemId);
         verifyNoMoreInteractions(this.stockRepo);
     }

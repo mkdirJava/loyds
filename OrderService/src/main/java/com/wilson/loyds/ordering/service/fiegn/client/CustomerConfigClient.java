@@ -6,6 +6,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 /**
  * Fiegn client to retrieve customer client info
  */
-@FeignClient(name="customerConfigClient", url="${customerConfig.url}")
+@FeignClient(name = "customerConfigClient", url = "${customerConfig.url}")
 public interface CustomerConfigClient extends CustomerApi {
 }

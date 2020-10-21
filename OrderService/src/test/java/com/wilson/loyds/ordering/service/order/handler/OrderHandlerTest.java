@@ -66,7 +66,7 @@ class OrderHandlerTest {
         OrderProcessResult orderProcessResult = this.classUnderTest.processOrder(tenantId, order);
         LocalDateTime finished = LocalDateTime.now();
 
-        assertTrue(orderProcessResult.getPaymentDateTime().isAfter(start)|| orderProcessResult.getPaymentDateTime()
+        assertTrue(orderProcessResult.getPaymentDateTime().isAfter(start) || orderProcessResult.getPaymentDateTime()
                 .equals(start));
         assertTrue(orderProcessResult.getPaymentDateTime().isBefore(finished) || orderProcessResult.getPaymentDateTime()
                 .equals(finished));
@@ -118,7 +118,7 @@ class OrderHandlerTest {
         assertTrue(orderProcessResult.getPaymentDateTime().isBefore(finished) || orderProcessResult.getPaymentDateTime()
                 .equals(finished));
 
-        verify(this.orderRepo,times(2)).save(any());
+        verify(this.orderRepo, times(2)).save(any());
         verify(this.orderRepo).findByMessageId(messageId);
         verify(this.iEmailService).sendEmail(orderRecipient, orderEntityId.toString());
         verify(this.paymentApi).handlePayment(tenantId, Payment.builder().order(order).build());
